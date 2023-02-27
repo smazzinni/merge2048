@@ -9,6 +9,11 @@ import android.view.KeyEvent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainView view;
 
+    private AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,18 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         view.hasSaveState = settings.getBoolean("save_state", false);
+
+        setContentView(R.layout.activity_main);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+
+            }
+        });
+
+        adView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         if (savedInstanceState != null) {
             if (savedInstanceState.getBoolean("hasState")) {
@@ -88,8 +106,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void onPause() {
+        // Pause the AdView.
+        adView.pause();
+
         super.onPause();
         save();
+
     }
 
     private void save() {
@@ -125,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
+        // Resume the AdView.
+        adView.resume();
         load();
         signInToGoogle();
     }

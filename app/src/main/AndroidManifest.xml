@@ -18,15 +18,16 @@
         -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7160044035327424/8524114393" />
+            android:value="ca-app-pub-7160044035327424~7327879969" />
 
 
-        <!-- Include the AdActivity configChanges and theme. -->
+        <!-- Include the AdActivity configChanges and theme.
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent" /> -->
+
         <activity
             android:name="com.rioforge.merge2048.MainActivity"
             android:exported="true"
